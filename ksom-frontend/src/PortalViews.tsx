@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Clock, Calendar, FileText, CreditCard, User, Award, BookOpen } from 'lucide-react';
+import { CheckCircle2, Clock, Calendar, User, Award, BookOpen } from 'lucide-react';
 
 // --- SHARED UI COMPONENTS ---
 const Card = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
