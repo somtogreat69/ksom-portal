@@ -38,6 +38,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess }) => {
                 setError(data.message || 'Authentication failed.');
             }
         } catch (err) {
+            console.error("🚨 THE REAL ERROR:", err);
             setError('Network error. Is the server running?');
         } finally {
             setLoading(false);
