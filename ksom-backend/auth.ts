@@ -62,7 +62,7 @@ router.post('/signup', async (req: Request, res: Response): Promise<void> => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            `INSERT INTO students (full_name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, full_name, email`,
+            `INSERT INTO users (full_name, email, password) VALUES ($1, $2, $3) RETURNING id, full_name, email`,
             [full_name, email, hashedPassword]
         );
         
@@ -94,10 +94,10 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
-        const result = await pool.query(`SELECT * FROM students WHERE email = $1`, [email]);
+        const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
         const user = result.rows[0];
 
-        if (!user || !(await bcrypt.compare(password, user.password_hash))) {
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             res.status(401).json({ success: false, message: 'Invalid email or password.' });
             return;
         }
