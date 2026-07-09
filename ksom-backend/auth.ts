@@ -5,6 +5,33 @@ import { Pool } from 'pg';
 
 const router = express.Router();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+// Auto-build tables in the exact correct order
+pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        full_name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+`).then(() => {
+    console.log("✅ Users table is ready!");
+    
+    // Now that Users exists, build the Attendance table
+    return pool.query(`
+        CREATE TABLE IF NOT EXISTS attendance (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id),
+            status VARCHAR(50) NOT NULL,
+            location VARCHAR(255),
+            clock_in TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `);
+}).then(() => {
+    console.log("✅ Attendance table is ready!");
+}).catch(err => {
+    console.error("🚨 DB Setup Error:", err);
+});
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 // --- AUTHENTICATION MIDDLEWARE ---
