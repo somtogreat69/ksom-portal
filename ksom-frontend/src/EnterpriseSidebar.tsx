@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, GraduationCap, BookOpen, ClipboardCheck, CalendarDays, CreditCard, UserCircle, LogOut, Menu, X } from 'lucide-react';
 
 interface SidebarProps {
   onLogout: () => void;
   userName: string;
-  activePath: string;                      // <-- NEW: Receives current path
-  onNavigate: (path: string) => void;      // <-- NEW: Tells App.tsx to change path
+  activePath: string;
+  onNavigate: (path: string) => void;
 }
 
 const NAV_ITEMS = [
@@ -19,7 +19,15 @@ const NAV_ITEMS = [
 ];
 
 export const EnterpriseSidebar: React.FC<SidebarProps> = ({ onLogout, userName, activePath, onNavigate }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // Start closed on mobile so it doesn't block the screen!
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  // Auto-expand sidebar ONLY on laptops/desktops
+  useEffect(() => {
+    if (window.innerWidth >= 768) {
+      setIsCollapsed(false);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -32,11 +40,18 @@ export const EnterpriseSidebar: React.FC<SidebarProps> = ({ onLogout, userName, 
 
   return (
     <>
-      <button className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#0f0f0f] text-[#e3e3e3] rounded-md shadow-lg" onClick={() => setIsCollapsed(!isCollapsed)}>
+      {/* Mobile Floating Menu Button */}
+      <button className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#171717] border border-white/10 text-[#e3e3e3] rounded-md shadow-2xl" onClick={() => setIsCollapsed(!isCollapsed)}>
         {isCollapsed ? <Menu size={24} /> : <X size={24} />}
       </button>
 
-      <nav className={`fixed top-0 left-0 h-screen bg-[#171717] border-r border-white/5 text-[#e3e3e3] flex flex-col shadow-2xl transition-all duration-300 z-40 ${isCollapsed ? 'w-20' : 'w-64'}`}>
+      {/* Dark Overlay to tap-to-close on mobile */}
+      {!isCollapsed && (
+        <div className="md:hidden fixed inset-0 bg-black/70 z-30 transition-opacity" onClick={() => setIsCollapsed(true)} />
+      )}
+
+      {/* Sidebar Navigation */}
+      <nav className={`absolute md:relative top-0 left-0 h-screen bg-[#171717] border-r border-white/5 text-[#e3e3e3] flex flex-col shadow-2xl transition-all duration-300 z-40 flex-shrink-0 ${isCollapsed ? '-translate-x-full md:translate-x-0 md:w-20' : 'translate-x-0 w-64'}`}>
         
         <div className="flex items-center justify-between h-20 px-6 border-b border-white/5">
           {!isCollapsed && <img src="/logo.png" alt="Koinonia" className="h-10 object-contain drop-shadow-lg opacity-90" />}
@@ -50,7 +65,12 @@ export const EnterpriseSidebar: React.FC<SidebarProps> = ({ onLogout, userName, 
             const isActive = activePath === item.path;
             const Icon = item.icon;
             return (
-              <button key={item.id} onClick={() => onNavigate(item.path)} // <-- NEW: Triggers navigation
+              <button key={item.id} 
+                onClick={() => { 
+                  onNavigate(item.path);
+                  // Auto-close menu on phones after clicking a link
+                  if (window.innerWidth < 768) setIsCollapsed(true);
+                }} 
                 className={`relative flex items-center h-12 rounded-lg transition-all duration-200 group ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${isActive ? 'bg-white/10 text-white font-medium' : 'text-white/40 hover:bg-white/5 hover:text-[#e3e3e3]'}`}>
                 {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#e3e3e3] rounded-r-full" />}
                 <Icon size={22} className="flex-shrink-0" />

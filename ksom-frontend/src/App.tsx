@@ -52,8 +52,8 @@ function App() {
             onLogout={() => setUser(null)} 
           />
 
-          <main className="flex-1 md:pl-64 h-screen overflow-y-auto">
-            <div className="min-h-full p-8 md:p-12 pb-24">
+          <main className="flex-1 h-screen overflow-y-auto relative">
+            <div className="min-h-full p-6 pt-24 md:p-12 pb-24">
               {renderView()}
             </div>
           </main>
