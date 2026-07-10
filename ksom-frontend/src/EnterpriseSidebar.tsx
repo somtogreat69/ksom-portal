@@ -40,10 +40,12 @@ export const EnterpriseSidebar: React.FC<SidebarProps> = ({ onLogout, userName, 
 
   return (
     <>
-      {/* Mobile Floating Menu Button */}
-      <button className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#171717] border border-white/10 text-[#e3e3e3] rounded-md shadow-2xl" onClick={() => setIsCollapsed(!isCollapsed)}>
-        {isCollapsed ? <Menu size={24} /> : <X size={24} />}
-      </button>
+      {/* Mobile Floating Menu Button - ONLY shows when menu is closed */}
+      {isCollapsed && (
+        <button className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[#171717] border border-white/10 text-[#e3e3e3] rounded-md shadow-2xl" onClick={() => setIsCollapsed(false)}>
+          <Menu size={24} />
+        </button>
+      )}
 
       {/* Dark Overlay to tap-to-close on mobile */}
       {!isCollapsed && (
@@ -53,11 +55,33 @@ export const EnterpriseSidebar: React.FC<SidebarProps> = ({ onLogout, userName, 
       {/* Sidebar Navigation */}
       <nav className={`absolute md:relative top-0 left-0 h-screen bg-[#171717] border-r border-white/5 text-[#e3e3e3] flex flex-col shadow-2xl transition-all duration-300 z-40 flex-shrink-0 ${isCollapsed ? '-translate-x-full md:translate-x-0 md:w-20' : 'translate-x-0 w-64'}`}>
         
-        <div className="flex items-center justify-between h-20 px-6 border-b border-white/5">
-          {!isCollapsed && <img src="/logo.png" alt="Koinonia" className="h-10 object-contain drop-shadow-lg opacity-90" />}
-          <button onClick={() => setIsCollapsed(!isCollapsed)} className="hidden md:block p-1 hover:bg-white/5 rounded text-white/40 hover:text-white transition-colors">
-            <Menu size={20} />
+        {/* --- BRANDING HEADER (Matched to official KSOM design) --- */}
+        <div className="relative pt-4 pb-8 border-b border-white/5 flex flex-col items-center justify-center min-h-[140px]">
+          
+          {/* Mobile Close Button (Top Right) */}
+          <button 
+            onClick={() => setIsCollapsed(true)} 
+            className="md:hidden absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors"
+          >
+            <X size={26} strokeWidth={1.5} />
           </button>
+
+          {/* Desktop Toggle Button (Top Right) */}
+          <button 
+            onClick={() => setIsCollapsed(!isCollapsed)} 
+            className="hidden md:block absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors"
+          >
+            <Menu size={24} strokeWidth={1.5} />
+          </button>
+
+          {/* Logo (Centered & Prominent) */}
+          {!isCollapsed && (
+            <img 
+              src="/logo.png" 
+              alt="Koinonia KSOM" 
+              className="h-20 w-auto object-contain drop-shadow-lg mt-6" 
+            />
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-2 px-3">
