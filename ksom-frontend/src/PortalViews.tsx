@@ -60,7 +60,7 @@ export const ProgrammeView = () => (
     <Card>
       <div className="border-b border-white/5 pb-6 mb-6">
         <h2 className="text-xl font-bold">KSOM Advanced Ministry Training</h2>
-        <p className="text-white/40 mt-2">Class of 2026 • 2 Year Diploma</p>
+        <p className="text-white/40 mt-2">Class of 2026 </p>
       </div>
       <div className="space-y-4">
         {[
@@ -88,13 +88,13 @@ export const ProgrammeView = () => (
 // --- 3. COURSES VIEW ---
 export const CoursesView = () => (
   <div className="w-full max-w-5xl mx-auto animate-in fade-in duration-500">
-    <h1 className="text-2xl font-bold text-[#e3e3e3] mb-6">Current Courses</h1>
+    <h1 className="text-2xl font-bold text-[#e3e3e3] mb-6">Courses</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {[
-        { name: "Hermeneutics & Homiletics", instructor: "Apostle Joshua Selman", progress: 75 },
-        { name: "Kingdom Economics", instructor: "Pst. David", progress: 40 },
-        { name: "The Prophetic Ministry", instructor: "Apostle Joshua Selman", progress: 90 },
-        { name: "Church Administration", instructor: "Min. Grace", progress: 10 },
+        { name: "Finance", instructor: "Apostle Joshua Selman", progress: 75 },
+        { name: "Ministry", instructor: "Pst. David", progress: 40 },
+        { name: "Pneumatology", instructor: "Apostle Joshua Selman", progress: 90 },
+        { name: "Personal Transformation", instructor: "Min. Grace", progress: 10 },
       ].map((course, i) => (
         <Card key={i} className="hover:border-white/20 transition-colors cursor-pointer">
           <div className="flex items-start space-x-4">
@@ -114,30 +114,30 @@ export const CoursesView = () => (
 // --- 4. EVENTS VIEW ---
 export const EventsView = () => (
   <div className="w-full max-w-5xl mx-auto animate-in fade-in duration-500">
-    <h1 className="text-2xl font-bold text-[#e3e3e3] mb-6">Events & Schedule</h1>
-    <Card>
-      <div className="space-y-0">
-        {[
-          { date: "AUG 14", time: "5:00 PM", title: "Koinonia Abuja Miracle Service", loc: "DOAF Headquarters" },
-          { date: "AUG 21", time: "8:00 AM", title: "KSOM Impartation & Retreat", loc: "Main Auditorium" },
-          { date: "SEP 05", time: "10:00 AM", title: "First Semester Examinations", loc: "CBT Center" },
-        ].map((ev, i) => (
-          <div key={i} className="flex items-center space-x-6 p-4 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors rounded-xl">
-            <div className="text-center min-w-[60px]">
-              <p className="text-xs font-bold text-white/40 uppercase">{ev.date.split(' ')[0]}</p>
-              <p className="text-2xl font-black text-[#e3e3e3]">{ev.date.split(' ')[1]}</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-lg">{ev.title}</h3>
-              <p className="text-sm text-white/40 flex items-center gap-2 mt-1"><Calendar size={14}/> {ev.time} • {ev.loc}</p>
-            </div>
-          </div>
-        ))}
+    <div className="mb-6">
+      <h1 className="text-2xl font-bold text-[#e3e3e3]">Events & Schedule</h1>
+      <p className="text-white/40 mt-1">Upcoming sessions, services, and special events</p>
+    </div>
+    
+    {/* Empty State Card */}
+    <Card className="flex flex-col items-center justify-center py-16">
+      <div className="h-16 w-16 bg-white/5 rounded-2xl flex items-center justify-center mb-4">
+        <Calendar size={32} className="text-white/40" />
       </div>
+      <h2 className="text-xl font-bold text-[#e3e3e3]">No events available</h2>
+      <p className="text-sm text-white/40 text-center mt-2 max-w-sm">
+        There are currently no upcoming sessions or services. Please check back later.
+      </p>
     </Card>
+
+    {/* Tip Box */}
+    <div className="mt-6 p-4 bg-emerald-950/20 border border-emerald-500/20 rounded-xl">
+      <p className="text-sm text-emerald-400/90 leading-relaxed">
+        <span className="font-bold text-emerald-400">Tip:</span> Mark these dates on your personal calendar to ensure you don't miss any sessions. Regular attendance is encouraged for your spiritual growth.
+      </p>
+    </div>
   </div>
 );
-
 // --- 5. PAYMENT VIEW ---
 export const PaymentView = () => (
   <div className="w-full max-w-5xl mx-auto animate-in fade-in duration-500">
