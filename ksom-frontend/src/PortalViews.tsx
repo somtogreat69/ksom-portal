@@ -13,7 +13,7 @@ export const DashboardView = ({ userName }: { userName: string }) => (
   <div className="space-y-6 w-full max-w-5xl mx-auto animate-in fade-in duration-500">
     <div>
       <h1 className="text-3xl font-extrabold text-[#e3e3e3]">Welcome back, {userName}</h1>
-      <p className="text-white/40 mt-1">Here is your ministry training overview for today.</p>
+      <p className="text-white/40 mt-1">Here is your ministry training overview</p>
     </div>
     
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -91,18 +91,26 @@ export const CoursesView = () => (
     <h1 className="text-2xl font-bold text-[#e3e3e3] mb-6">Courses</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {[
-        { name: "Finance", instructor: "Apostle Joshua Selman", progress: 75 },
-        { name: "Ministry", instructor: "Pst. David", progress: 40 },
-        { name: "Pneumatology", instructor: "Apostle Joshua Selman", progress: 90 },
-        { name: "Personal Transformation", instructor: "Min. Grace", progress: 10 },
+        { name: "Finance", progress: 65 },
+        { name: "Ministry", progress: 35 },
+        { name: "Pneumatology", progress: 85 },
+        { name: "Personal Transformation", progress: 15 },
       ].map((course, i) => (
-        <Card key={i} className="hover:border-white/20 transition-colors cursor-pointer">
-          <div className="flex items-start space-x-4">
-            <div className="p-4 bg-white/5 rounded-xl"><BookOpen className="text-[#e3e3e3]" size={24} /></div>
-            <div className="flex-1">
-              <h3 className="font-bold text-lg">{course.name}</h3>
-              <p className="text-sm text-white/40 mb-4">{course.instructor}</p>
-              <div className="w-full bg-[#0f0f0f] rounded-full h-1.5"><div className="bg-[#e3e3e3] h-1.5 rounded-full" style={{width: `${course.progress}%`}}></div></div>
+        <Card key={i} className="hover:border-white/20 transition-colors cursor-pointer py-5">
+          {/* Changed items-start to items-center for perfect vertical balance */}
+          <div className="flex items-center space-x-5">
+            <div className="p-4 bg-white/5 rounded-xl">
+              <BookOpen className="text-[#e3e3e3]" size={24} />
+            </div>
+            <div className="flex-1 pr-2">
+              {/* Added mb-3 to create clean spacing between title and bar */}
+              <h3 className="font-bold text-lg mb-3">{course.name}</h3>
+              <div className="w-full bg-[#0f0f0f] rounded-full h-1.5">
+                <div 
+                  className="bg-[#e3e3e3] h-1.5 rounded-full" 
+                  style={{width: `${course.progress}%`}}
+                ></div>
+              </div>
             </div>
           </div>
         </Card>
@@ -155,15 +163,11 @@ export const PaymentView = () => (
         <tbody className="text-sm">
           <tr>
             <td className="py-4 text-[#e3e3e3]">INV-2026-001</td>
-            <td className="py-4">Semester 3 Tuition Fee</td>
-            <td className="py-4 font-mono">150,000</td>
+            <td className="py-4">Application Fee</td>
+            <td className="py-4 font-mono">30,000</td>
             <td className="py-4"><span className="px-2 py-1 bg-emerald-950/30 text-emerald-400 rounded text-xs font-bold">PAID</span></td>
           </tr>
           <tr className="border-t border-white/5">
-            <td className="py-4 text-[#e3e3e3]">INV-2026-045</td>
-            <td className="py-4">Study Materials & Books</td>
-            <td className="py-4 font-mono">25,000</td>
-            <td className="py-4"><span className="px-2 py-1 bg-amber-950/30 text-amber-400 rounded text-xs font-bold">PENDING</span></td>
           </tr>
         </tbody>
       </table>
