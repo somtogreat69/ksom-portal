@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Clock, Calendar, User, Award, BookOpen } from 'lucide-react';
+import { CheckCircle2, Clock, Calendar, User, Award, BookOpen, GraduationCap, MapPin, Users } from 'lucide-react';
 
 // --- SHARED UI COMPONENTS ---
 const Card = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
@@ -56,32 +56,63 @@ export const DashboardView = ({ userName }: { userName: string }) => (
 // --- 2. PROGRAMME VIEW ---
 export const ProgrammeView = () => (
   <div className="w-full max-w-5xl mx-auto animate-in fade-in duration-500">
-    <h1 className="text-2xl font-bold text-[#e3e3e3] mb-6">My Programme</h1>
-    <Card>
-      <div className="border-b border-white/5 pb-6 mb-6">
-        <h2 className="text-xl font-bold">KSOM Advanced Ministry Training</h2>
-        <p className="text-white/40 mt-2">Class of 2026 </p>
-      </div>
-      <div className="space-y-4">
-        {[
-          { title: "Semester 1: Foundation of Faith", status: "Completed", date: "Jan - Jun 2025" },
-          { title: "Semester 2: Ministerial Ethics", status: "Completed", date: "Jul - Dec 2025" },
-          { title: "Semester 3: Spiritual Warfare & Dynamics", status: "In Progress", date: "Jan - Jun 2026" },
-          { title: "Semester 4: Apostolic Leadership", status: "Upcoming", date: "Jul - Dec 2026" },
-        ].map((mod, i) => (
-          <div key={i} className="flex items-center justify-between p-4 bg-[#0f0f0f] rounded-xl border border-white/5">
-            <div>
-              <p className="font-bold text-[#e3e3e3]">{mod.title}</p>
-              <p className="text-sm text-white/40">{mod.date}</p>
+    <div className="mb-6">
+      <h1 className="text-2xl font-bold text-[#e3e3e3]">My Programme</h1>
+      <p className="text-white/40 mt-1">View your programme details and information</p>
+    </div>
+
+    <div className="space-y-6">
+      {/* Programme Overview Card */}
+      <Card>
+        <div className="flex items-center justify-between border-b border-white/5 pb-5 mb-2">
+          <h2 className="text-xl font-bold text-[#e3e3e3]">Programme Overview</h2>
+          <span className="px-3 py-1 bg-amber-950/30 text-amber-500 rounded-full text-xs font-bold border border-amber-500/20">
+            Active
+          </span>
+        </div>
+        
+        <div className="flex flex-col">
+          {[
+            { icon: GraduationCap, label: "Programme Type", value: "KSOM Nigeria" },
+            { icon: MapPin, label: "Campus / Location", value: "Abuja" },
+            { icon: Users, label: "Cohort / Year", value: "2026" },
+            { icon: Clock, label: "Programme Duration", value: "6 Months" },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4 py-4 border-b border-white/5 last:border-0 last:pb-0">
+              <div className="p-3 bg-white/5 rounded-xl">
+                <item.icon className="text-white/40" size={20} />
+              </div>
+              <div>
+                <p className="text-sm text-white/40">{item.label}</p>
+                <p className="font-bold text-[#e3e3e3] mt-0.5">{item.value}</p>
+              </div>
             </div>
-            <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-              mod.status === 'Completed' ? 'bg-emerald-950/30 text-emerald-400' : 
-              mod.status === 'In Progress' ? 'bg-blue-950/30 text-blue-400' : 'bg-white/5 text-white/40'
-            }`}>{mod.status}</span>
+          ))}
+        </div>
+      </Card>
+
+      {/* Programme Timeline Card */}
+      <Card>
+        <h2 className="text-xl font-bold text-[#e3e3e3] mb-6">Programme Timeline</h2>
+        <div className="space-y-6">
+          <div>
+            <p className="text-sm text-white/40">Start Date</p>
+            <p className="font-bold text-[#e3e3e3] mt-1">January 2026</p>
           </div>
-        ))}
+          <div>
+            <p className="text-sm text-white/40">End Date</p>
+            <p className="font-bold text-[#e3e3e3] mt-1">September 2026</p>
+          </div>
+        </div>
+      </Card>
+
+      {/* Note Box */}
+      <div className="p-4 bg-amber-950/20 border border-amber-500/20 rounded-xl">
+        <p className="text-sm text-amber-400/90 leading-relaxed">
+          <span className="font-bold text-amber-400">Note:</span> Your programme details are managed by the KSOM administration. If you notice any discrepancies, please contact the KSOM office through the Messages section.
+        </p>
       </div>
-    </Card>
+    </div>
   </div>
 );
 
