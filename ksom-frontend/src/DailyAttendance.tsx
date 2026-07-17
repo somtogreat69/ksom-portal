@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, MapPinOff, CheckCircle2, XCircle, Loader2, Navigation } from 'lucide-react';
 
-const DOAF_ANCHOR = { lat: 9.0820, lng: 7.4892 };
+// Pinpointed to DOAF Headquarters, Kado Express
+const DOAF_ANCHOR = { lat: 9.077139, lng: 7.431690 };
 const MAX_RADIUS = 150;
 
 const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
